@@ -7,6 +7,8 @@ import SignUp from "./pages/sign-up/SignUp";
 import Places from "./pages/places/Places";
 import PlaceDetails from "./pages/place-details/PlaceDetails";
 import UserProfile from "./pages/user-profile/UserProfile";
+import About from "./pages/about/About";
+import Contact from "./pages/contact/Contact";
 import NotFound from "./pages/not-found/NotFound";
 
 const App = () => {
@@ -21,6 +23,8 @@ const App = () => {
         <Route path="/places" element={<Places />} />
         <Route path="/place-details" element={<PlaceDetails />} />
         <Route path="/user-profile" element={<UserProfile />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 
