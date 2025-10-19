@@ -8,7 +8,7 @@ import Places from "./pages/places/Places";
 import PlaceDetails from "./pages/place-details/PlaceDetails";
 import UserProfile from "./pages/user-profile/UserProfile";
 import NotFound from "./pages/not-found/NotFound";
-
+import AboutUs from "./pages/AboutUs/AboutUs";
 const App = () => {
   return (
     <div>
@@ -22,6 +22,7 @@ const App = () => {
         <Route path="/place-details" element={<PlaceDetails />} />
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/About" element={<AboutUs />} />
       </Routes>
 
       <Footer />
