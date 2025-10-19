@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   Navbar,
@@ -55,21 +54,6 @@ export default function Header() {
         >
           <MapPinIcon className="w-4 h-4 flex-shrink-0" />
           <span className="font-medium">Places </span>
-        </NavLink>
-      </li>
-
-      {/* Culture */}
-      <li className="flex items-center gap-x-2">
-        <NavLink
-          to="/culture"
-          className={({ isActive }) =>
-            isActive
-              ? "bg-teal-500 px-4 py-2 rounded-lg flex items-center gap-x-2 text-white"
-              : "flex items-center gap-x-2 text-gray-700 hover:text-teal-500 transition-colors"
-          }
-        >
-          <CalendarIcon className="w-4 h-4 flex-shrink-0" />
-          <span className="font-medium">Culture</span>
         </NavLink>
       </li>
 
@@ -183,4 +167,3 @@ export default function Header() {
     </header>
   );
 }
-
