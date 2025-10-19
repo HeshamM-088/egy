@@ -20,7 +20,7 @@ const teamMembers = [
     imageUrl: "/Avatars/logo5.png",
   },
   {
-    name: "Omar Iraqi",
+    name: "Omar Iraqii",
     role: "Front-end Developer",
     socials: {
       gmail: "mailto:omariraqii415@gmail.com",
