@@ -4,10 +4,14 @@ import App from "./App.jsx";
 import { ThemeProvider } from "@material-tailwind/react";
 import { BrowserRouter } from "react-router-dom";
 
+import { ThemeProvider as AppThemeProvider } from "./hooks/ThemeContext.jsx";
+
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <ThemeProvider>
-      <App />
-    </ThemeProvider>
+    <AppThemeProvider>
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
+    </AppThemeProvider>
   </BrowserRouter>
 );
