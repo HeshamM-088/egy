@@ -35,7 +35,7 @@ const Home = () => {
         </div>
       </header>
 
-      <section className="py-10 md:py-12">
+      <section className="py-10 md:py-12 mb-1">
         <div className="max-w-screen-xl mx-auto px-4">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
             <div className="flex flex-col items-center p-4 text-gray-800 dark:text-gray-200">

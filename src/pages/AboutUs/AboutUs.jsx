@@ -90,7 +90,7 @@ const cardVariants = {
 
 function AboutUs() {
   return (
-    <div className="min-h-screen w-full   bg-[#DEDED1]  dark:bg-black">
+    <div className="min-h-screen w-full   bg-[#DEDED1]  dark:bg-gray-900 mb-1">
       <motion.div //the green header animation
         className="bg-teal-600 text-white text-center py-20 w-full dark:  dark:bg-black"
         initial={{ opacity: 0 }}
@@ -146,7 +146,7 @@ function AboutUs() {
           viewport={{ once: true, amount: 0.3 }}
           className="py-16"
         >
-          <h2 className="text-4xl font-bold text-center mb-12">
+          <h2 className="text-4xl font-bold text-center mb-12 text-white">
             Our Core Values
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
@@ -191,7 +191,9 @@ function AboutUs() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <h2 className="text-4xl font-bold text-center mb-4">Meet the Team</h2>
+          <h2 className="text-4xl font-bold text-center mb-4 text-white">
+            Meet the Team
+          </h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 text-center mb-12">
             “Meet the people behind the vision — turning Egypt’s landmarks into
             a digital journey.”
