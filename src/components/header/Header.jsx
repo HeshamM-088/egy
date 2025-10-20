@@ -58,21 +58,6 @@ export default function Header() {
         </NavLink>
       </li>
 
-      {/* Culture */}
-      <li>
-        <NavLink
-          to="/culture"
-          className={({ isActive }) =>
-            isActive
-              ? "bg-teal-500 px-4 py-2 rounded-lg flex items-center gap-x-2 text-white"
-              : "flex items-center gap-x-2 text-gray-700 hover:text-teal-500 transition-colors"
-          }
-        >
-          <CalendarIcon className="w-4 h-4" />
-          <span className="font-medium">Culture</span>
-        </NavLink>
-      </li>
-
       {/* About */}
       <li>
         <NavLink
