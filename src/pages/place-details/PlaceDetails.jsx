@@ -1,9 +1,3 @@
-import { useParams } from "react-router-dom";
-import { cardsData } from "../places/dataPlace.jsx";
-import { CiLocationOn } from "react-icons/ci";
-import { FaClock, FaDollarSign, FaMapMarkerAlt } from "react-icons/fa";
-import { Button } from "@material-tailwind/react";
-
 const PlaceDetails = () => {
   const { id } = useParams();
   return (
