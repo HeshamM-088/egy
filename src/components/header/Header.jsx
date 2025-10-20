@@ -14,7 +14,7 @@ import {
   UserIcon,
   EnvelopeIcon,
 } from "@heroicons/react/24/outline";
-import ThemeToggle from "../ThemeToggle/ThemeToggle"; // ✅ أضفنا الاستيراد
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
 export default function Header() {
   const [openNav, setOpenNav] = React.useState(false);
