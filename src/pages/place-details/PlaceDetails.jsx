@@ -43,7 +43,7 @@ const PlaceDetails = () => {
                 </div>
               </div>
             </div>
-            <div className="content flex gap-5 justify-between w-full sm:flex-col md:flex-col lg:flex-row  h-full p-10">
+            <div className="content flex gap-5 justify-between w-full flex-col md:flex-col lg:flex-row  h-full p-10">
               <div className=" bg-white lg:w-[66%] sm:w-[100%] md:[100%] rounded-2xl shadow-sm p-9">
                 <h1 className=" text-2xl font-bold-">About {card.title}</h1>
                 <br />
