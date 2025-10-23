@@ -23,9 +23,9 @@ const PlaceDetails = () => {
                   className="absolute top-0 left-0 w-[100%]
                 h-[100%] object-cover  object-fixed z-0"
                 />
-                <div className="absolute top-0 left-0 w-full h-full bg-black/50 z-10"></div>
+                <div className="absolute top-0 left-0 w-full h-full bg-black/50 z-50"></div>
               </div>
-              <div className="absolute top-2/3 left-5 bg-[rgb(212,175,55)] z-50 text-[rgb(44,36,22)]  px-3 py-1 rounded-full text-sm">
+              <div className="absolute top-2/3 left-5 bg-[rgb(212,175,55)] z-10 text-[rgb(44,36,22)]  px-3 py-1 rounded-full text-sm">
                 {card.type}
               </div>
               <h1 className="text-white text-3xl md:text-4xl lg:text-5xl  absolute bottom-16 left-5 font-bold z-20">
