@@ -10,10 +10,13 @@ import UserProfile from "./pages/user-profile/UserProfile";
 import Contact from "./pages/contact/Contact";
 import NotFound from "./pages/not-found/NotFound";
 import AboutUs from "./pages/AboutUs/AboutUs";
+import { ThemeProvider } from "./hooks/ThemeContext";
+
 const App = () => {
   return (
-    <div>
-      <Header />
+    <ThemeProvider>
+      <div className="bg-white dark:bg-gray-700 min-h-screen transition-colors duration-300">
+        <Header />
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -27,8 +30,9 @@ const App = () => {
         <Route path="*" element={<NotFound />} />
       </Routes>
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </ThemeProvider>
   );
 };
 

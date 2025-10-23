@@ -90,9 +90,9 @@ const cardVariants = {
 
 function AboutUs() {
   return (
-    <div className="min-h-screen w-full   bg-[#DEDED1]  dark:bg-black">
-      <motion.div //the green header animation
-        className="bg-teal-600 text-white text-center py-20 w-full dark:  dark:bg-black"
+    <div className="min-h-screen w-full   bg-[#DEDED1]  dark:bg-gray-900 mb-1 transition-colors duration-300">
+      <motion.div
+        className="bg-teal-600 text-white text-center py-20 w-full dark:bg-black"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
@@ -146,13 +146,13 @@ function AboutUs() {
           viewport={{ once: true, amount: 0.3 }}
           className="py-16"
         >
-          <h2 className="text-4xl font-bold text-center mb-12">
+          <h2 className="text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white">
             Our Core Values
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
             <div>
               <SparklesIcon className="w-12 h-12 mx-auto mb-4 text-teal-500 dark:text-teal-400" />
-              <h3 className="text-2xl font-bold mb-2 dark:text-white">
+              <h3 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">
                 Authenticity
               </h3>
               <p className="text-gray-600 dark:text-gray-400">
@@ -163,7 +163,7 @@ function AboutUs() {
 
             <div>
               <HeartIcon className="w-12 h-12 mx-auto mb-4 text-teal-500 dark:text-teal-400" />
-              <h3 className="text-2xl font-bold mb-2 dark:text-white">
+              <h3 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">
                 Passion
               </h3>
               <p className="text-gray-600 dark:text-gray-400">
@@ -191,7 +191,9 @@ function AboutUs() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <h2 className="text-4xl font-bold text-center mb-4">Meet the Team</h2>
+          <h2 className="text-4xl font-bold text-center mb-4 text-gray-900 dark:text-white">
+            Meet the Team
+          </h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 text-center mb-12">
             “Meet the people behind the vision — turning Egypt’s landmarks into
             a digital journey.”

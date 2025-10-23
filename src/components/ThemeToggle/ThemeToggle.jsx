@@ -9,21 +9,24 @@ function ThemeToggle() {
     <button
       onClick={toggleTheme}
       className="
-        bg-gray-700 
-        hover:bg-gray-600 
-        dark:bg-gray-200 
-        dark:hover:bg-gray-300 
-        w-10 h-10 
-        rounded-full 
-        flex items-center justify-center 
-        transition-colors duration-200 
-        focus:outline-none"
+        relative
+        flex items-center justify-center
+        w-10 h-10
+        rounded-xl
+        border border-gray-300/60 dark:border-gray-600/50
+        bg-white/70 dark:bg-gray-800/70
+        shadow-sm
+        hover:shadow-md
+        hover:scale-105
+        transition-all duration-200 ease-in-out
+        backdrop-blur-sm
+      "
       aria-label="Toggle theme"
     >
       {theme === "light" ? (
-        <MoonIcon className="w-6 h-6 text-blue-300" />
+        <MoonIcon className="w-5 h-5 text-gray-700 dark:text-gray-200" />
       ) : (
-        <SunIcon className="w-6 h-6 text-yellow-400" />
+        <SunIcon className="w-5 h-5 text-yellow-400" />
       )}
     </button>
   );
