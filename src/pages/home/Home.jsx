@@ -23,7 +23,7 @@ const Home = () => {
           <p className="text-lg md:text-2xl text-white mb-8 max-w-xl mx-auto font-bold font-serif">
             A world of beauty, stories, and thrill
           </p>
-          <Link to="/Login">
+          <Link to="/places">
             <Button
               color="white"
               size="lg"
