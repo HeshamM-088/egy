@@ -16,7 +16,7 @@ import {
 } from "@heroicons/react/24/outline";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
-export default function Header() {
+export default function Header({ isLoggedIn, logout }) {
   const [openNav, setOpenNav] = React.useState(false);
 
   React.useEffect(() => {
@@ -25,10 +25,14 @@ export default function Header() {
       () => window.innerWidth >= 960 && setOpenNav(false)
     );
   }, []);
+  React.useEffect(() => {
+    if (isLoggedIn) {
+      setOpenNav(false); 
+    }
+  }, [isLoggedIn]);
 
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-8">
-      {/* Home */}
       <li>
         <NavLink
           to="/"
@@ -43,7 +47,6 @@ export default function Header() {
         </NavLink>
       </li>
 
-      {/* Places */}
       <li>
         <NavLink
           to="/places"
@@ -58,7 +61,6 @@ export default function Header() {
         </NavLink>
       </li>
 
-      {/* About */}
       <li>
         <NavLink
           to="/about"
@@ -73,7 +75,6 @@ export default function Header() {
         </NavLink>
       </li>
 
-      {/* Contact */}
       <li>
         <NavLink
           to="/contact"
@@ -88,20 +89,42 @@ export default function Header() {
         </NavLink>
       </li>
 
-      {/* Profile */}
       <li>
+        {isLoggedIn ? (
+          <div className="flex items-center gap-x-2">
         <NavLink
-          to="/user-profile"
-          className={({ isActive }) =>
-            isActive
-              ? "bg-teal-500 px-4 py-2 rounded-lg flex items-center gap-x-2 text-white"
-              : "flex items-center gap-x-2 text-gray-700 hover:text-teal-500 transition-colors"
-          }
-        >
-          <UserIcon className="w-4 h-4" />
-          <span className="font-medium">Profile</span>
-        </NavLink>
-      </li>
+        to="/user/1"
+        className={({ isActive }) =>
+          isActive
+            ? "bg-teal-500 px-4 py-2 rounded-lg flex items-center gap-x-2 text-white"
+            : "flex items-center gap-x-2 text-gray-700 hover:text-teal-500 transition-colors"
+        }
+      >
+        <UserIcon className="w-4 h-4" />
+        <span className="font-medium">Profile</span>
+      </NavLink>
+      <button
+        onClick={logout}
+        className="ml-2 bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition-colors"
+      >
+        Logout
+      </button>
+    </div>
+  ) : (
+    <NavLink
+      to="/login"
+      className={({ isActive }) =>
+        isActive
+          ? "bg-teal-500 px-4 py-2 rounded-lg flex items-center gap-x-2 text-white"
+          : "flex items-center gap-x-2 text-gray-700 hover:text-teal-500 transition-colors"
+      }
+    >
+      <UserIcon className="w-4 h-4" />
+      <span className="font-medium">Login</span>
+    </NavLink>
+  )}
+  </li>
+
     </ul>
   );
 
