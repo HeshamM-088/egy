@@ -7,7 +7,7 @@ import { Button } from "@material-tailwind/react";
 const PlaceDetails = () => {
   const { id } = useParams();
   return (
-    <div className="bg-[#00000037] ">
+    <div className="bg-[#faf8f4] dark:bg-gray-900 transition-colors duration-300">
       {cardsData
         .filter((card) => card.id === id)
         .map((card) => (
@@ -44,31 +44,41 @@ const PlaceDetails = () => {
               </div>
             </div>
             <div className="content flex gap-5 justify-between w-full flex-col md:flex-col lg:flex-row  h-full p-10">
-              <div className=" bg-white lg:w-[66%] sm:w-[100%] md:[100%] rounded-2xl shadow-sm p-9">
-                <h1 className=" text-2xl font-bold-">About {card.title}</h1>
+              <div className="bg-white dark:bg-gray-800 lg:w-[66%] sm:w-[100%] md:[100%] rounded-2xl shadow-sm p-9 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  About {card.title}
+                </h1>
                 <br />
                 <div className="mt-8">
-                  <p className="text-gray-500 w-[100%]">{card.content1}</p>
+                  <p className="text-gray-700 dark:text-gray-300 w-[100%]">
+                    {card.content1}
+                  </p>
                 </div>
                 <div className="mt-8">
-                  <p className="text-gray-500 w-[100%]">{card.content2}</p>
+                  <p className="text-gray-700 dark:text-gray-300 w-[100%]">
+                    {card.content2}
+                  </p>
                 </div>
                 <div className="mt-8">
-                  <p className="text-gray-500 w-[100%]">{card.content3}</p>
+                  <p className="text-gray-700 dark:text-gray-300 w-[100%]">
+                    {card.content3}
+                  </p>
                 </div>
               </div>
               <div className="flex lg:w-[34%] sm:w-[100%] md:[100%] flex-col gap-3">
-                <div className=" w-full bg-[#faf8f4] h-full rounded-2xl shadow-sm border border-gray-200 p-6">
-                  <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                <div className="w-full bg-[#faf8f4] dark:bg-gray-900 h-full rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 transition-colors duration-300">
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-400 mb-4">
                     Quick Information
                   </h2>
                   <div className="flex items-start gap-3 mb-4">
                     <FaClock className="text-teal-600 text-xl mt-3" />
                     <div>
-                      <p className="text-sm text-gray-500 font-medium">
+                      <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
                         Opening Hours
                       </p>
-                      <p className="text-gray-800 ">8:00 AM - 5:00 PM</p>
+                      <p className="text-gray-800 dark:text-gray-400 ">
+                        8:00 AM - 5:00 PM
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3 mb-4">
@@ -90,16 +100,16 @@ const PlaceDetails = () => {
                     </div>
                   </div>
                 </div>
-                <div className="w-full bg-[rgb(26,155,142)] text-white rounded-2xl shadow-md border border-gray-200 p-6">
+                <div className="w-full bg-[rgb(26,155,142)] text-white rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 p-6 transition-colors duration-300">
                   <h2 className="text-2xl font-semibold mb-3">
                     Plan Your Visit
                   </h2>
-                  <p className="text-sm text-gray-200 mb-6">
+                  <p className="text-sm text-gray-100 mb-6">
                     Book a guided tour and make the most of your experience
                     exploring this site.
                   </p>
                   <div className="flex justify-center ">
-                    <Button className="w-full transition duration-500 font-bold text-1xl text-black hover:bg-amber-500 bg-[rgb(232,213,183)] ">
+                    <Button className="w-full transition duration-500 font-bold text-1xl text-black dark:text-white hover:bg-amber-500 bg-[rgb(232,213,183)] dark:bg-[rgb(35,45,45)]">
                       Book Now
                     </Button>
                   </div>
