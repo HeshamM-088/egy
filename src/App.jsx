@@ -18,17 +18,17 @@ const App = () => {
       <div className="bg-white dark:bg-gray-700 min-h-screen transition-colors duration-300">
         <Header />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/places" element={<Places />} />
-        <Route path="/place-details/:id" element={<PlaceDetails />} />
-        <Route path="/user-profile" element={<UserProfile />} />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/places" element={<Places />} />
+          <Route path="/place-details/:id" element={<PlaceDetails />} />
+          <Route path="/user-profile" element={<UserProfile />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
 
         <Footer />
       </div>
