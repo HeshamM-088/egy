@@ -21,16 +21,14 @@ const App = () => {
     <ThemeProvider>
 
       <div className="bg-white dark:bg-gray-700 min-h-screen transition-colors duration-300">
-        {/* <Header isLoggedIn={isLoggedIn} logout={logout} /> */}
        <Header key={isLoggedIn ? "logged-in" : "logged-out"} isLoggedIn={isLoggedIn} logout={logout} />
-
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login login={login} />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/places" element={<Places />} />
-          <Route path="/place-details" element={<PlaceDetails />} />
+          <Route path="/place-details/:id" element={<PlaceDetails />} />
           <Route path="/user/1" element={<UserProfile logout={logout} />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<Contact />} />
