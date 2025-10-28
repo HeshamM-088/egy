@@ -25,7 +25,7 @@ const AppContent = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/places" element={<Places />} />
-        <Route path="/place-details" element={<PlaceDetails />} />
+        <Route path="//place-details/:id" element={<PlaceDetails />} />
 
         <Route
           path="/user/1"
