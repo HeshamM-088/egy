@@ -26,28 +26,26 @@ const Login = () => {
       setSuccess("");
       return;
     }
-
     if (!email.includes("@") || !email.includes(".")) {
       setError("Invalid email address!");
       setSuccess("");
       return;
     }
-
     if (password.length < 6) {
       setError("Password must be at least 6 characters!");
       setSuccess("");
       return;
     }
-
     setError("");
     setSuccess("Login successful!");
     login();
   };
-
   return (
-    <div className="relative min-h-screen flex items-center justify-center bg-[#f1f0eb] dark:bg-gray-900 overflow-hidden transition-colors duration-300">
-      <div className="absolute inset-0 bg-[url('/rename.jpg')] bg-cover bg-center opacity-60 h-full"></div>
+    <div className="relative min-h-screen flex items-center justify-center bg-[#f1f0eb] dark:bg-gray-900 overflow-hidden transition-colors duration-300 mb-1">
+      {" "}
+      <div className="absolute inset-0 bg-[url('/rename.jpg')] bg-cover bg-center opacity-60 h-full"></div>{" "}
       <div className="h-screen flex items-center justify-center">
+        {" "}
         <div className="max-w-5xl flex flex-col md:flex-row items-center justify-between mt-2 rounded-2xl bg-blue-gray-300 dark:bg-gray-800 shadow-lg transition-colors duration-300">
           <Card className="w-95 max-w-sm shadow-sm mx-4 my-10 md:w-96 bg-white dark:bg-gray-900 dark:text-white transition-colors duration-300">
             <CardHeader variant="gradient" color="teal" className="mb-3 grid h-12 place-items-center">
@@ -66,10 +64,10 @@ const Login = () => {
               <Input label="Email" size="lg" type="email" onChange={(e) => setEmail(e.target.value)} />
               <Input label="Password" size="lg" type="password" onChange={(e) => setPassword(e.target.value)} />
               <div className="-ml-2.5">
-                <Checkbox label="Remember Me" color="teal" />
-              </div>
-            </CardBody>
-
+                {" "}
+                <Checkbox label="Remember Me" color="teal" />{" "}
+              </div>{" "}
+            </CardBody>{" "}
             <CardFooter className="pt-0">
               <Button color="teal" variant="gradient" fullWidth onClick={handleLogin}>
                 Login
