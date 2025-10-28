@@ -1,4 +1,3 @@
-import useauth from "./hooks/useauth";
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
@@ -12,32 +11,47 @@ import Contact from "./pages/contact/Contact";
 import NotFound from "./pages/not-found/NotFound";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import { ThemeProvider } from "./hooks/ThemeContext";
+import { AuthProvider, useAuth } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
-
-const App = () => {
-    const { isLoggedIn, login, logout } = useauth(); 
+const AppContent = () => {
+  const { isLoggedIn } = useAuth();
 
   return (
-    <ThemeProvider>
+    <div className="bg-white dark:bg-gray-700 min-h-screen transition-colors duration-300">
+      <Header key={isLoggedIn ? "logged-in" : "logged-out"} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/places" element={<Places />} />
+        <Route path="//place-details/:id" element={<PlaceDetails />} />
 
-      <div className="bg-white dark:bg-gray-700 min-h-screen transition-colors duration-300">
-       <Header key={isLoggedIn ? "logged-in" : "logged-out"} isLoggedIn={isLoggedIn} logout={logout} />
+        <Route
+          path="/user/1"
+          element={
+            <ProtectedRoute>
+              <UserProfile />
+            </ProtectedRoute>
+          }
+        />
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/places" element={<Places />} />
-          <Route path="/place-details/:id" element={<PlaceDetails />} />
-          <Route path="/user/1" element={<UserProfile logout={logout} />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <Footer />
+    </div>
+  );
+};
 
-        <Footer />
-      </div>
-    </ThemeProvider>
+const App = () => {
+  return (
+    <AuthProvider>
+      <ThemeProvider>
+        <AppContent />
+      </ThemeProvider>
+    </AuthProvider>
   );
 };
 
