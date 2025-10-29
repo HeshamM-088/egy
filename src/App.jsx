@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import Home from "./pages/home/Home";
@@ -13,19 +13,23 @@ import AboutUs from "./pages/AboutUs/AboutUs";
 import { ThemeProvider } from "./hooks/ThemeContext";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminApp from "./admin/AdminApp";
+import AdminRoute from "./admin/AdminRoute";
 
 const AppContent = () => {
   const { isLoggedIn } = useAuth();
+  const location = useLocation();
+  const isAdminPath = location.pathname.startsWith("/admin");
 
   return (
     <div className="bg-white dark:bg-gray-700 min-h-screen transition-colors duration-300">
-      <Header key={isLoggedIn ? "logged-in" : "logged-out"} />
+      {!isAdminPath && <Header key={isLoggedIn ? "logged-in" : "logged-out"} />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/places" element={<Places />} />
-        <Route path="//place-details/:id" element={<PlaceDetails />} />
+        <Route path="/place-details/:id" element={<PlaceDetails />} />
 
         <Route
           path="/user/1"
@@ -38,9 +42,17 @@ const AppContent = () => {
 
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<Contact />} />
+        <Route
+          path="/admin/*"
+          element={
+            <AdminRoute>
+              <AdminApp />
+            </AdminRoute>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <Footer />
+      {!isAdminPath && <Footer />}
     </div>
   );
 };

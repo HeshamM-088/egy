@@ -37,8 +37,15 @@ const Login = () => {
       return;
     }
     setError("");
+    // Check admin 
+    if (email === "admin@egyguide.com" && password === "admin123") {
+      setSuccess("Welcome, Admin!");
+      login({ name: "Admin", email, role: "admin" });
+      return;
+    }
+    //  user
     setSuccess("Login successful!");
-    login();
+    login({ name: "User", email, role: "user" });
   };
   return (
     <div className="relative min-h-screen flex items-center justify-center bg-[#f1f0eb] dark:bg-gray-900 overflow-hidden transition-colors duration-300 mb-1">
