@@ -9,7 +9,7 @@ import {
   EnvelopeIcon,
 } from "@heroicons/react/24/outline";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
-import { useAuth } from "../../context/AuthContext"; 
+import { useAuth } from "../../context/AuthContext";
 
 export default function Header() {
   const [openNav, setOpenNav] = React.useState(false);
@@ -50,6 +50,34 @@ export default function Header() {
         >
           <MapPinIcon className="w-4 h-4" />
           <span className="font-medium">Places</span>
+        </NavLink>
+      </li>
+
+      <li>
+        <NavLink
+          to="/about"
+          className={({ isActive }) =>
+            isActive
+              ? "bg-teal-500 px-4 py-2 rounded-lg flex items-center gap-x-2 text-white"
+              : "flex items-center gap-x-2 text-gray-700 hover:text-teal-500 transition-colors"
+          }
+        >
+          <InformationCircleIcon className="w-4 h-4" />
+          <span className="font-medium">About Us</span>
+        </NavLink>
+      </li>
+
+      <li>
+        <NavLink
+          to="/contact"
+          className={({ isActive }) =>
+            isActive
+              ? "bg-teal-500 px-4 py-2 rounded-lg flex items-center gap-x-2 text-white"
+              : "flex items-center gap-x-2 text-gray-700 hover:text-teal-500 transition-colors"
+          }
+        >
+          <EnvelopeIcon className="w-4 h-4" />
+          <span className="font-medium">Contact</span>
         </NavLink>
       </li>
 
