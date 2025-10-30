@@ -11,6 +11,7 @@ import UserProfile from "./pages/user-profile/UserProfile";
 import Contact from "./pages/contact/Contact";
 import NotFound from "./pages/not-found/NotFound";
 import AboutUs from "./pages/AboutUs/AboutUs";
+import Checkout from "./pages/checkout/Checkout";
 import { ThemeProvider } from "./hooks/ThemeContext";
 
 
@@ -32,6 +33,7 @@ const App = () => {
           <Route path="/user/1" element={<UserProfile logout={logout} />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
 
