@@ -10,9 +10,9 @@ import UserProfile from "./pages/user-profile/UserProfile";
 import Contact from "./pages/contact/Contact";
 import NotFound from "./pages/not-found/NotFound";
 import AboutUs from "./pages/AboutUs/AboutUs";
-import Checkout from "./pages/checkout/Checkout";
+import Checkout from "./pages/checkout/Checkout"; // ✅ Added Checkout
 import { ThemeProvider } from "./hooks/ThemeContext";
-import { AuthProvider, useAuth } from "./context/AuthContext";
+import { AuthProvider, useAuth } from "./context/AuthContext"; // ✅ Correct import
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const AppContent = () => {
@@ -20,15 +20,18 @@ const AppContent = () => {
 
   return (
     <div className="bg-white dark:bg-gray-700 min-h-screen transition-colors duration-300">
+      {/* Rerenders header when auth state changes */}
       <Header key={isLoggedIn ? "logged-in" : "logged-out"} />
 
       <Routes>
+        {/* Public Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/places" element={<Places />} />
         <Route path="/place-details/:id" element={<PlaceDetails />} />
 
+        {/* Protected Route (Only when logged in) */}
         <Route
           path="/user/1"
           element={
@@ -38,12 +41,14 @@ const AppContent = () => {
           }
         />
 
+        {/* Static Pages */}
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<Contact />} />
 
-        {/* ✅ Added your Checkout page here */}
+        {/* ✅ Checkout Page */}
         <Route path="/checkout" element={<Checkout />} />
 
+        {/* Not Found Page */}
         <Route path="*" element={<NotFound />} />
       </Routes>
 
