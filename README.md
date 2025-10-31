@@ -1,20 +1,13 @@
-# ![EGY-Guide Logo](https://i.postimg.cc/RFfkX04Q/logo.png) EGY-Guide
+<h1>
+     <img src="https://i.postimg.cc/RFfkX04Q/logo.png" alt="EGY-Guide Logo" style="width:50px ;margin-right:3px;margin-top:5px; height:auto; vertical-align:middle;">
+   EGY-Guide
+</h1>
+**EGY-Guide** is a comprehensive digital platform designed to showcase the rich heritage, vibrant culture, and hidden gems of Egypt. It aims to be the ultimate guide for tourists, expats, and locals alike.
+<img src="https://almatar.com/blog/wp-content/uploads/2022/07/%D8%A7%D9%84%D8%B3%D9%8A%D8%A7%D8%AD%D8%A9-%D9%81%D9%8A-%D9%85%D8%B5%D8%B1.jpg" style="width:100%;">
+<h1>📖 Overview</h1>
+EGY-Guide is envisioned as a user-friendly web and mobile application that provides curated information about Egyptian travel destinations, historical sites, cultural events, and local experiences. It goes beyond traditional travel guides by offering interactive maps, personalized itineraries, and community-driven reviews and recommendations.
 
-**EGY-Guide** is a comprehensive digital platform designed to showcase the rich heritage, vibrant culture, and hidden gems of Egypt.  
-It aims to be the ultimate guide for tourists, expats, and locals alike.
-
-![Tourism in Egypt](https://almatar.com/blog/wp-content/uploads/2022/07/%D8%A7%D9%84%D8%B3%D9%8A%D8%A7%D8%AD%D8%A9-%D9%81%D9%8A-%D9%85%D8%B5%D8%B1.jpg)
-
----
-
-## 📖 Overview
-
-**EGY-Guide** is a user-friendly web and mobile application providing curated information about Egypt’s travel destinations, historical sites, cultural events, and local experiences.  
-It goes beyond traditional travel guides by offering **interactive maps**, **personalized itineraries**, and **community-driven reviews and recommendations**.
-
----
-
-## 🎯 Objectives
+<h1>🎯 Objective</h1>
 
 The main objectives of EGY-Guide are to:
 
