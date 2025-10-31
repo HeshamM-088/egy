@@ -28,7 +28,7 @@ We are a dedicated team working together to bring **EGY-Guide** to life:
 - [**Yasmin Awod Ebrahim**](https://github.com/yasmin20s)  
 - [**Sama Osama Mohamed**](https://github.com/SamaOssama)
 - [**Shahd hisham Muhammed**](https://github.com/shahdhisham14)
-- [**Nada Mostafa Atef Elzorkany**]()
+- [**Nada Mostafa Atef Elzorkany**](https://github.com/zorkany5)
 
 ---
 
