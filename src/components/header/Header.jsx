@@ -9,7 +9,7 @@ import {
   EnvelopeIcon,
 } from "@heroicons/react/24/outline";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 export default function Header() {
   const [openNav, setOpenNav] = React.useState(false);
