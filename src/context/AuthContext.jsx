@@ -19,7 +19,6 @@ export const AuthProvider = ({ children }) => {
   const isAdmin = !!currentUser && currentUser.role === "admin";
 
   const login = (user) => {
-    
     const toStore = {
       name: user?.name || "User",
       email: user?.email || "",
@@ -27,6 +26,7 @@ export const AuthProvider = ({ children }) => {
     };
     localStorage.setItem("user", JSON.stringify(toStore));
     setCurrentUser(toStore);
+
     if (toStore.role === "admin") {
       navigate("/admin");
     } else {
@@ -47,10 +47,13 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, isAdmin, currentUser, login, logout, updateUser }}>
+    <AuthContext.Provider
+      value={{ isLoggedIn, isAdmin, currentUser, login, logout, updateUser }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
 
 export const useAuth = () => useContext(AuthContext);
+  
