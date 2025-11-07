@@ -11,7 +11,7 @@ import Contact from "./pages/contact/Contact";
 import NotFound from "./pages/not-found/NotFound";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import { ThemeProvider } from "./hooks/ThemeContext";
-import { AuthProvider, useAuth } from "./context/AuthContext";
+import { AuthProvider, useAuth } from "./context/AuthContext.jsx";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminApp from "./admin/AdminApp";
 import AdminRoute from "./admin/AdminRoute";
