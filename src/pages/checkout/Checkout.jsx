@@ -17,12 +17,12 @@ const Checkout = () => {
     const place = location.state?.card || location.state || {};
 
     setBooking({
-      title: place.title || "Pyramids Sound & Light Show",
-      content1: place.content1 || "Experience the magic of ancient Egypt with a spectacular sound and light show at the Pyramids of Giza.",
-      img: place.img || "../../../public/egypt.webp",
-      date: place.date || "Saturday, November 15, 2025",
-      time: place.time || "7:00 PM",
-      location: place.location || "Giza Plateau, Cairo, Egypt",
+      title: place.title ,
+      content1: place.content1 ,
+      img: place.img ,
+      date: place.date ,
+      time: place.time ,
+      location: place.location ,
       price: parseFloat(place.price) || 45,
       serviceFee: parseFloat(place.serviceFee) || 5,
     });
