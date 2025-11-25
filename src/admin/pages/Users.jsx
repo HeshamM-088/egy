@@ -1,20 +1,8 @@
 import { useEffect, useState } from "react";
-
-const initialUsers = [
-  { id: 1, name: "Admin", email: "admin@egyguide.com", role: "admin" },
-  { id: 2, name: "Sara Ali", email: "sara@example.com", role: "user" },
-  { id: 3, name: "Omar Nabil", email: "omar@example.com", role: "user" },
-];
+import { Link } from "react-router-dom";
 
 const Users = () => {
-  const [users, setUsers] = useState(() => {
-    try {
-      const stored = localStorage.getItem("admin_users");
-      return stored ? JSON.parse(stored) : initialUsers;
-    } catch {
-      return initialUsers;
-    }
-  });
+  const [users, setUsers] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState({ name: "", email: "", role: "user" });
   const [showForm, setShowForm] = useState(false);
@@ -22,23 +10,36 @@ const Users = () => {
   const [confirmId, setConfirmId] = useState(null);
   const [toast, setToast] = useState("");
 
-  useEffect(() => {
-    localStorage.setItem("admin_users", JSON.stringify(users));
-  }, [users]);
 
-  const startAdd = () => {
-    setForm({ name: "", email: "", role: "user" });
-    setIsEditing(false);
-    setEditingId(null);
-    setShowForm(true);
+useEffect(() => {
+  const fetchUsers = async () => {
+    const link = import.meta.env.VITE_API_URL;
+    const res = await fetch(`${link}users`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    const data = await res.json();
+    setUsers(data.data || []); 
   };
 
-  const startEdit = (u) => {
-    setEditingId(u.id);
-    setForm({ name: u.name, email: u.email, role: u.role });
+  fetchUsers();
+}, []);
+
+  const startEdit = async (u) => {
+  try {
+    const userData = await fetchOneUser(u._id); 
+    setEditingId(u._id);
+    setForm({ name: userData.name, email: userData.email, role: userData.role });
     setIsEditing(true);
     setShowForm(true);
-  };
+  } catch (err) {
+    console.error(err);
+    showToast(err.message);
+  }
+};
 
   const cancelForm = () => {
     setShowForm(false);
@@ -47,30 +48,66 @@ const Users = () => {
     setForm({ name: "", email: "", role: "user" });
   };
 
-  const saveForm = () => {
-    if (!form.name || !form.email) {
-      showToast("Please fill name and email");
+  const saveForm = async () => {
+  if (!form.name || !form.email) {
+    showToast("Please fill name and email");
+    return;
+  }
+
+  if (isEditing && editingId != null) {
+    try {
+      const updatedUser = await updateUser(editingId, form); 
+      setUsers(prevUsers =>
+  prevUsers.map(u => (u._id === editingId ? { ...u, ...updatedUser } : u))
+);
+      showToast("User updated successfully ");
+    } catch (err) {
+      console.error(err);
+      showToast(err.message);
+    }
+  } else {
+    const newUser = { _id: Date.now(), ...form };
+    setUsers([newUser, ...users]);
+    showToast("User added");
+  }
+
+  cancelForm();
+};
+
+
+  const askDelete = (_id) => setConfirmId(_id);
+  const confirmDelete = async () => {
+  if (!confirmId) return;
+
+  try {
+    const link = import.meta.env.VITE_API_URL;
+
+    const res = await fetch(`${link}users/${confirmId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      showToast(data.message || "Failed to delete user");
       return;
     }
-    if (isEditing && editingId != null) {
-      setUsers(users.map((u) => (u.id === editingId ? { ...u, ...form } : u)));
-      showToast("User updated");
-    } else {
-      const newUser = { id: Date.now(), ...form };
-      setUsers([newUser, ...users]);
-      showToast("User added");
-    }
-    cancelForm();
-  };
 
-  const askDelete = (id) => setConfirmId(id);
-  const confirmDelete = () => {
-    if (confirmId != null) {
-      setUsers(users.filter((u) => u.id !== confirmId));
-      setConfirmId(null);
-      showToast("User deleted");
-    }
-  };
+    // remove user 
+    setUsers(users.filter((u) => u._id !== confirmId));
+    showToast("User deleted successfully ");
+  } catch (err) {
+    console.error("Delete error:", err);
+    showToast("Server error");
+  } finally {
+    setConfirmId(null);
+  }
+};
+
   const cancelDelete = () => setConfirmId(null);
 
   const showToast = (msg) => {
@@ -78,17 +115,41 @@ const Users = () => {
     setTimeout(() => setToast(""), 2000);
   };
 
+  const fetchOneUser = async (_id) => {
+  const link = import.meta.env.VITE_API_URL;
+  const res = await fetch(`${link}users/${_id}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Failed to fetch user");
+  return data.data; 
+};
+
+
+const updateUser = async (_id, updatedData) => {
+  const link = import.meta.env.VITE_API_URL;
+  const res = await fetch(`${link}users/${_id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: JSON.stringify(updatedData),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Failed to update user");
+  return data.data; 
+};
+
   return (
     <div>
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
           Users
         </h1>
-        <button
-          className="px-4 py-2 rounded bg-teal-600 text-white"
-          onClick={startAdd}>
-          Add User
-        </button>
       </div>
       {toast && (
         <div className="mt-3 text-sm text-teal-700 dark:text-teal-300">
@@ -107,9 +168,9 @@ const Users = () => {
           </thead>
           <tbody className="divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-800">
             {users.map((u) => (
-              <tr key={u.id}>
+              <tr key={u._id}>
                 <Td>
-                  {editingId === u.id ? (
+                  {editingId === u._id ? (
                     <input
                       className="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded px-2 py-1 text-gray-800 dark:text-gray-100"
                       value={form.name}
@@ -122,7 +183,7 @@ const Users = () => {
                   )}
                 </Td>
                 <Td>
-                  {editingId === u.id ? (
+                  {editingId === u._id ? (
                     <input
                       className="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded px-2 py-1 text-gray-800 dark:text-gray-100"
                       value={form.email}
@@ -135,7 +196,7 @@ const Users = () => {
                   )}
                 </Td>
                 <Td>
-                  {editingId === u.id ? (
+                  {editingId === u._id ? (
                     <select
                       className="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded px-2 py-1 text-gray-800 dark:text-gray-100"
                       value={form.role}
@@ -150,7 +211,7 @@ const Users = () => {
                   )}
                 </Td>
                 <Td>
-                  {editingId === u.id ? (
+                  {editingId === u._id ? (
                     <div className="flex gap-2">
                       <button
                         className="px-3 py-1 rounded bg-teal-600 text-white"
@@ -172,7 +233,7 @@ const Users = () => {
                       </button>
                       <button
                         className="px-3 py-1 rounded bg-red-600 text-white"
-                        onClick={() => askDelete(u.id)}>
+                        onClick={() => askDelete(u._id)}>
                         Delete
                       </button>
                     </div>
@@ -184,10 +245,9 @@ const Users = () => {
         </table>
       </div>
 
-      {showForm && (
-        <Modal
-          onClose={cancelForm}
-          title={isEditing ? "Edit User" : "Add User"}>
+      {isEditing && showForm && (
+       
+        <Modal onClose={cancelForm} title="Edit User">
           <div className="space-y-3">
             <Field label="Name">
               <input
@@ -222,7 +282,7 @@ const Users = () => {
               <button
                 className="px-4 py-2 rounded bg-teal-600 text-white"
                 onClick={saveForm}>
-                {isEditing ? "Update" : "Add"}
+                Update
               </button>
             </div>
           </div>

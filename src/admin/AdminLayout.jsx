@@ -10,11 +10,6 @@ const AdminLayout = ({ children }) => {
           <h2 className="text-xl font-semibold text-teal-700 dark:text-teal-400">
             Admin
           </h2>
-          <button
-            className="text-sm px-2 py-1 rounded bg-red-600 text-white"
-            onClick={logout}>
-            Logout
-          </button>
         </div>
         {currentUser && (
           <div className="mb-3 text-xs text-gray-600 dark:text-gray-400">

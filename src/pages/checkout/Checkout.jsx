@@ -12,7 +12,7 @@ const Checkout = () => {
   const booking = place || {
     title: "Pyramids Sound & Light Show",
     content1: "Experience the magic of ancient Egypt with a spectacular sound and light show at the Pyramids of Giza.",
-    img: "../../../public/egypt.webp",
+    img: "../../../egypt.webp",
     date: "Saturday, November 15, 2025",
     time: "7:00 PM",
     location: "Giza Plateau, Cairo, Egypt",

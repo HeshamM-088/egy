@@ -5,11 +5,12 @@ import Events from "./pages/Events";
 import Users from "./pages/Users";
 import Settings from "./pages/Settings";
 
+
 const AdminApp = () => {
   return (
     <AdminLayout>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
+        <Route index element={<Dashboard />} />
         <Route path="events" element={<Events />} />
         <Route path="users" element={<Users />} />
         <Route path="settings" element={<Settings />} />
@@ -18,6 +19,7 @@ const AdminApp = () => {
     </AdminLayout>
   );
 };
+
 
 export default AdminApp;
 
