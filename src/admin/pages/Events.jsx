@@ -9,6 +9,10 @@ const seedFromCards = () => {
     date: new Date().toISOString().slice(0, 10),
     location: c.location,
     image: c.img,
+    entryFee: "",
+    openingFrom: "",
+    openingTo: "",
+    category: "Historical",
   }));
 };
 
@@ -33,6 +37,10 @@ const Events = () => {
     date: "",
     location: "",
     image: "",
+    entryFee: "",
+    openingFrom: "",
+    openingTo: "",
+    category: "Historical",
   });
 
   useEffect(() => {
@@ -40,7 +48,17 @@ const Events = () => {
   }, [events]);
 
   const openAdd = () => {
-    setForm({ title: "", description: "", date: "", location: "", image: "" });
+    setForm({
+      title: "",
+      description: "",
+      date: "",
+      location: "",
+      image: "",
+      entryFee: "",
+      openingFrom: "",
+      openingTo: "",
+      category: "Historical",
+    });
     setIsEditing(false);
     setEditingId(null);
     setShowForm(true);
@@ -53,21 +71,34 @@ const Events = () => {
       date: ev.date,
       location: ev.location,
       image: ev.image,
+      entryFee: ev.entryFee || "",
+      openingFrom: ev.openingFrom || "",
+      openingTo: ev.openingTo || "",
+      category: ev.category || "Historical",
     });
     setIsEditing(true);
     setEditingId(ev.id);
     setShowForm(true);
   };
 
-  const closeForm = () => {
-    setShowForm(false);
-  };
+  const closeForm = () => setShowForm(false);
 
   const saveForm = () => {
     if (!form.title || !form.date || !form.location) {
       showToast("Please fill required fields (title, date, location)");
       return;
     }
+
+    if (!form.openingFrom || !form.openingTo) {
+      showToast("Please enter opening hours");
+      return;
+    }
+
+    if (form.openingFrom >= form.openingTo) {
+      showToast("Opening time must be before closing time");
+      return;
+    }
+
     if (isEditing) {
       setEvents(
         events.map((e) => (e.id === editingId ? { ...e, ...form } : e))
@@ -78,12 +109,11 @@ const Events = () => {
       setEvents([newEvent, ...events]);
       showToast("Event added");
     }
+
     setShowForm(false);
   };
 
-  const askDelete = (id) => {
-    setConfirmId(id);
-  };
+  const askDelete = (id) => setConfirmId(id);
 
   const confirmDelete = () => {
     if (confirmId) {
@@ -108,10 +138,12 @@ const Events = () => {
         </h1>
         <button
           className="px-4 py-2 rounded bg-teal-600 text-white"
-          onClick={openAdd}>
+          onClick={openAdd}
+        >
           Add Event
         </button>
       </div>
+
       <p className="mt-2 text-gray-600 dark:text-gray-300">
         Manage your events.
       </p>
@@ -122,6 +154,7 @@ const Events = () => {
         </div>
       )}
 
+      {/* TABLE */}
       <div className="mt-4 overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
           <thead className="bg-gray-100 dark:bg-gray-900">
@@ -130,19 +163,37 @@ const Events = () => {
               <Th>Description</Th>
               <Th>Date</Th>
               <Th>Location</Th>
+              <Th>Entry Fee</Th>
+              <Th>Opening Hours</Th>
+              <Th>Category</Th>
               <Th>Image</Th>
               <Th>Action</Th>
             </tr>
           </thead>
+
           <tbody className="divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-800">
             {events.map((ev) => (
               <tr key={ev.id}>
                 <Td>{ev.title}</Td>
+
                 <Td>
                   <span className="line-clamp-2">{ev.description}</span>
                 </Td>
+
                 <Td>{ev.date}</Td>
+
                 <Td>{ev.location}</Td>
+
+                <Td>{ev.entryFee ? `${ev.entryFee} EGP` : "N/A"}</Td>
+
+                <Td>
+                  {ev.openingFrom && ev.openingTo
+                    ? `${ev.openingFrom} - ${ev.openingTo}`
+                    : "N/A"}
+                </Td>
+
+                <Td>{ev.category}</Td>
+
                 <Td>
                   {ev.image ? (
                     <img
@@ -154,16 +205,20 @@ const Events = () => {
                     <span className="text-xs text-gray-500">No image</span>
                   )}
                 </Td>
+
                 <Td>
                   <div className="flex gap-2">
                     <button
                       className="px-3 py-1 rounded bg-teal-600 text-white"
-                      onClick={() => openEdit(ev)}>
+                      onClick={() => openEdit(ev)}
+                    >
                       Edit
                     </button>
+
                     <button
                       className="px-3 py-1 rounded bg-red-600 text-white"
-                      onClick={() => askDelete(ev.id)}>
+                      onClick={() => askDelete(ev.id)}
+                    >
                       Delete
                     </button>
                   </div>
@@ -174,11 +229,14 @@ const Events = () => {
         </table>
       </div>
 
+      {/* FORM MODAL */}
       {showForm && (
         <Modal
           onClose={closeForm}
-          title={isEditing ? "Edit Event" : "Add Event"}>
+          title={isEditing ? "Edit Event" : "Add Event"}
+        >
           <div className="space-y-3">
+
             <Field label="Title">
               <input
                 className="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded px-3 py-2 text-gray-800 dark:text-gray-100"
@@ -186,16 +244,18 @@ const Events = () => {
                 onChange={(e) => setForm({ ...form, title: e.target.value })}
               />
             </Field>
+
             <Field label="Description">
               <textarea
-                className="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded px-3 py-2 text-gray-800 dark:text-gray-100"
                 rows="3"
+                className="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded px-3 py-2 text-gray-800 dark:text-gray-100"
                 value={form.description}
                 onChange={(e) =>
                   setForm({ ...form, description: e.target.value })
                 }
               />
             </Field>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <Field label="Date">
                 <input
@@ -205,6 +265,7 @@ const Events = () => {
                   onChange={(e) => setForm({ ...form, date: e.target.value })}
                 />
               </Field>
+
               <Field label="Location">
                 <input
                   className="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded px-3 py-2 text-gray-800 dark:text-gray-100"
@@ -215,6 +276,7 @@ const Events = () => {
                 />
               </Field>
             </div>
+
             <Field label="Image URL">
               <input
                 className="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded px-3 py-2 text-gray-800 dark:text-gray-100"
@@ -222,15 +284,71 @@ const Events = () => {
                 onChange={(e) => setForm({ ...form, image: e.target.value })}
               />
             </Field>
+
+            {/* Entry Fee */}
+            <Field label="Entry Fee (EGP)">
+              <input
+                type="number"
+                className="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded px-3 py-2 text-gray-800 dark:text-gray-100"
+                value={form.entryFee}
+                onChange={(e) =>
+                  setForm({ ...form, entryFee: e.target.value })
+                }
+              />
+            </Field>
+
+            {/* Opening Hours */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <Field label="Opening From">
+                <input
+                  type="time"
+                  className="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded px-3 py-2 text-gray-800 dark:text-gray-100"
+                  value={form.openingFrom}
+                  onChange={(e) =>
+                    setForm({ ...form, openingFrom: e.target.value })
+                  }
+                />
+              </Field>
+
+              <Field label="Opening To">
+                <input
+                  type="time"
+                  className="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded px-3 py-2 text-gray-800 dark:text-gray-100"
+                  value={form.openingTo}
+                  onChange={(e) =>
+                    setForm({ ...form, openingTo: e.target.value })
+                  }
+                />
+              </Field>
+            </div>
+
+            {/* Category */}
+            <Field label="Category">
+              <select
+                className="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded px-3 py-2 text-gray-800 dark:text-gray-100"
+                value={form.category}
+                onChange={(e) =>
+                  setForm({ ...form, category: e.target.value })
+                }
+              >
+                <option value="Historical">Historical</option>
+                <option value="Cultural">Cultural</option>
+                <option value="Natural">Natural</option>
+              </select>
+            </Field>
+
             <div className="flex justify-end gap-2 pt-2">
               <button
                 className="px-4 py-2 rounded bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-100"
-                onClick={closeForm}>
+                onClick={closeForm}
+              >
                 Cancel
               </button>
+
               <button
                 className="px-4 py-2 rounded bg-teal-600 text-white"
-                onClick={saveForm}>
+                onClick={saveForm}
+              >
                 {isEditing ? "Update" : "Add"}
               </button>
             </div>
@@ -238,20 +356,25 @@ const Events = () => {
         </Modal>
       )}
 
+      {/* Delete Confirmation */}
       {confirmId && (
         <Modal onClose={cancelDelete} title="Confirm Delete">
           <p className="text-gray-700 dark:text-gray-300">
             Are you sure you want to delete this event?
           </p>
+
           <div className="flex justify-end gap-2 pt-4">
             <button
               className="px-4 py-2 rounded bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-100"
-              onClick={cancelDelete}>
+              onClick={cancelDelete}
+            >
               Cancel
             </button>
+
             <button
               className="px-4 py-2 rounded bg-red-600 text-white"
-              onClick={confirmDelete}>
+              onClick={confirmDelete}
+            >
               Delete
             </button>
           </div>
@@ -261,11 +384,13 @@ const Events = () => {
   );
 };
 
+// COMPONENTS
 const Th = ({ children }) => (
   <th className="px-4 py-2 text-left text-xs font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">
     {children}
   </th>
 );
+
 const Td = ({ children }) => (
   <td className="px-4 py-2 text-sm text-gray-800 dark:text-gray-100 align-top">
     {children}
@@ -287,12 +412,15 @@ const Modal = ({ title, children, onClose }) => {
           <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
             {title}
           </h2>
+
           <button
             className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-            onClick={onClose}>
+            onClick={onClose}
+          >
             ✕
           </button>
         </div>
+
         <div className="mt-3">{children}</div>
       </div>
     </div>

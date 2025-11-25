@@ -25,112 +25,72 @@ const PlaceDetails = () => {
                 />
                 <div className="absolute top-0 left-0 w-full h-full bg-black/50 z-50"></div>
               </div>
-              <div className="absolute top-2/3 left-5 bg-[rgb(212,175,55)] z-10 text-[rgb(44,36,22)] px-3 py-1 rounded-full text-sm">
-                {card.type}
+              <div className="absolute top-2/3 left-5 bg-[rgb(212,175,55)] z-10 text-[rgb(44,51,51)] text-1xl font-bold rounded-2xl p-2 px-4 shadow-2xl">
+                {card.location}
               </div>
               <h1 className="text-white text-3xl md:text-4xl lg:text-5xl absolute bottom-16 left-5 font-bold z-20">
                 {card.title}
               </h1>
-              <div className="absolute bottom-5 left-5 flex items-center gap-4 z-20">
-                <p className="text-white text-base font-semibold flex items-center gap-2 flex-row px-3 py-1 rounded-lg backdrop-blur-sm">
-                  <CiLocationOn />
-                  {card.location}
-                </p>
-                <div className="flex items-center gap-2 text-white px-3 py-1 rounded-lg backdrop-blur-sm">
-                  <span>⭐</span>
-                  <p className="text-sm font-medium">{card.rating}</p>
-                  <span>({card.reviews})</span>
-                </div>
-              </div>
             </div>
-
-            <div className="content flex gap-5 justify-between w-full flex-col md:flex-col lg:flex-row h-full p-10">
-              <div className="bg-white dark:bg-gray-800 lg:w-[66%] sm:w-[100%] md:[100%] rounded-2xl shadow-sm p-9 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                  About {card.title}
-                </h1>
-                <br />
-                <div className="mt-8">
-                  <p className="text-gray-700 dark:text-gray-300 w-[100%]">
-                    {card.content1}
-                  </p>
-                </div>
-                <div className="mt-8">
-                  <p className="text-gray-700 dark:text-gray-300 w-[100%]">
-                    {card.content2}
-                  </p>
-                </div>
-                <div className="mt-8">
-                  <p className="text-gray-700 dark:text-gray-300 w-[100%]">
-                    {card.content3}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex lg:w-[34%] sm:w-[100%] md:[100%] flex-col gap-3">
-                <div className="w-full bg-[#faf8f4] dark:bg-gray-900 h-full rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 transition-colors duration-300">
-                  <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-400 mb-4">
-                    Quick Information
-                  </h2>
-
-                  <div className="flex items-start gap-3 mb-4">
-                    <FaClock className="text-teal-600 text-xl mt-3" />
-                    <div>
-                      <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
-                        Opening Hours
-                      </p>
-                      <p className="text-gray-800 dark:text-gray-400 ">
-                        {card.date} — {card.time}
-                      </p>
-                    </div>
+            <div className="p-10">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="md:col-span-2">
+                  <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                    About {card.title}
+                  </h1>
+                  <br />
+                  <div className="mt-8">
+                    <p className="text-gray-700 dark:text-gray-300 w-[100%]">
+                      {card.content1}
+                    </p>
                   </div>
-
-                  <div className="flex items-start gap-3 mb-4">
-                    <FaDollarSign className="text-teal-600 text-xl mt-3" />
-                    <div>
-                      <p className="text-sm text-gray-500 font-medium">
-                        Entry Fee
-                      </p>
-                      <p className="text-gray-800 ">
-                        ${card.price} + ${card.serviceFee} service fee
-                      </p>
-                    </div>
+                  <div className="mt-8">
+                    <p className="text-gray-700 dark:text-gray-300 w-[100%]">
+                      {card.content2}
+                    </p>
                   </div>
-
-                  <div className="flex items-start gap-3">
-                    <FaMapMarkerAlt className="text-teal-600 text-xl mt-3" />
-                    <div>
-                      <p className="text-sm text-gray-500 font-medium">
-                        Location
-                      </p>
-                      <p className="text-gray-800 ">{card.location}</p>
-                    </div>
+                  <div className="mt-8">
+                    <p className="text-gray-700 dark:text-gray-300 w-[100%]">
+                      {card.content3}
+                    </p>
                   </div>
                 </div>
-
-                <div className="w-full bg-[rgb(26,155,142)] text-white rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 p-6 transition-colors duration-300">
-                  <h2 className="text-2xl font-semibold mb-3">
-                    Plan Your Visit
-                  </h2>
-                  <p className="text-sm text-gray-100 mb-6">
-                    Book a guided tour and make the most of your experience exploring this site.
-                  </p>
-                  <div className="flex justify-center">
+                <div className="md:col-span-1 border-2 border-gray-200 dark:border-gray-700 rounded-xl p-5 shadow-lg h-fit">
+                  <div className="space-y-4">
+                    <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                      Booking Details
+                    </h2>
+                    <div className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
+                      <FaDollarSign className="w-5 h-5 text-green-600" />
+                      <span>Price: ${card.price}</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
+                      <FaMapMarkerAlt className="w-5 h-5 text-red-600" />
+                      <span>Location: {card.location}</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
+                      <FaClock className="w-5 h-5 text-blue-600" />
+                      <span>Time: {card.time}</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
+                      <CiLocationOn className="w-5 h-5 text-purple-600" />
+                      <span>Date: {card.date}</span>
+                    </div>
                     <Button
                       onClick={() =>
                         navigate("/checkout", {
                           state: {
                             card: {
                               id: card.id,
-                              name: card.title,
-                              description:
+                              title: card.title, // CORRECTED: Was 'name'
+                              content1: // CORRECTED: Was 'description'
                                 card.content1 ||
                                 card.content2 ||
                                 card.content3 ||
                                 "",
                               location: card.location,
-                              image: card.img,
-                              unitPrice: card.price,
+                              img: card.img, // CORRECTED: Was 'image'
+                              price: card.price, // CORRECTED: Was 'unitPrice'
                               serviceFee: card.serviceFee,
                               orderId: `#${Math.floor(
                                 Math.random() * 900000
@@ -157,4 +117,3 @@ const PlaceDetails = () => {
 };
 
 export default PlaceDetails;
-
