@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
     if (toStore.role === "admin") {
       navigate("/admin");
     } else {
-      navigate("/user/1");
+      navigate("/profile");
     }
   };
 
