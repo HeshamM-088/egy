@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 const Users = () => {
+  const { updateUser: updateAuthUser, currentUser } = useAuth();
   const [users, setUsers] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState({ name: "", email: "", role: "user" });
@@ -56,10 +58,15 @@ useEffect(() => {
 
   if (isEditing && editingId != null) {
     try {
-      const updatedUser = await updateUser(editingId, form); 
+      const updatedUser = await updateUserApi (editingId, form); 
       setUsers(prevUsers =>
   prevUsers.map(u => (u._id === editingId ? { ...u, ...updatedUser } : u))
 );
+ if (currentUser && updatedUser && currentUser.email === updatedUser.email) 
+ {
+  updateAuthUser(updatedUser);
+}
+
       showToast("User updated successfully ");
     } catch (err) {
       console.error(err);
@@ -129,7 +136,7 @@ useEffect(() => {
 };
 
 
-const updateUser = async (_id, updatedData) => {
+const updateUserApi  = async (_id, updatedData) => {
   const link = import.meta.env.VITE_API_URL;
   const res = await fetch(`${link}users/${_id}`, {
     method: "PUT",
@@ -141,7 +148,7 @@ const updateUser = async (_id, updatedData) => {
   });
   const data = await res.json();
   if (!res.ok) throw new Error(data.message || "Failed to update user");
-  return data.data; 
+  return data.user; 
 };
 
   return (
