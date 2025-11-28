@@ -3,30 +3,39 @@ import {
   Container, Grid, Card, Typography, TextField, Button,
   Checkbox, FormControlLabel, Box, Divider, RadioGroup, Radio,
 } from "@mui/material";
-import { useLocation } from "react-router-dom";
+import { useLocation ,useNavigate} from "react-router-dom";
+
 
 const Checkout = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [booking, setBooking] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [form, setForm] = useState({ name: "", email: "", phone: "" });
   const [payment, setPayment] = useState("card");
   const [agreed, setAgreed] = useState(false);
 
-  useEffect(() => {
-    const place = location.state?.card || location.state || {};
 
-    setBooking({
-      title: place.title ,
-      content1: place.content1 ,
-      img: place.img ,
-      date: place.date ,
-      time: place.time ,
-      location: place.location ,
-      price: parseFloat(place.price) || 45,
-      serviceFee: parseFloat(place.serviceFee) || 5,
-    });
-  }, [location.state]);
+useEffect(() => {
+  if (!location.state?.event) {
+    navigate("/");
+    return;
+  }
+  const place = location.state?.event || {};
+  
+
+  setBooking({
+    title: place.title,
+    content1: place.description, 
+    img: place.img,
+    date: place.date,
+    time: place.openingHours ? `${place.openingHours.from} - ${place.openingHours.to}` : "",
+    location: place.location,
+    price: parseFloat(place.entryFee) || 45,   
+    serviceFee: 5,
+  });
+}, [location]);
+
 
   const total = useMemo(() => {
     if (!booking) return 0;
@@ -43,7 +52,7 @@ const Checkout = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!agreed) return alert("Please agree to the terms first.");
-    alert("✅ Booking confirmed! Thank you for your purchase.");
+    alert(" Booking confirmed! Thank you for your purchase.");
   };
 
   const InfoField = ({ label, name, ...props }) => (
