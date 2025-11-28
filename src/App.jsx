@@ -10,21 +10,24 @@ import UserProfile from "./pages/user-profile/UserProfile";
 import Contact from "./pages/contact/Contact";
 import NotFound from "./pages/not-found/NotFound";
 import AboutUs from "./pages/AboutUs/AboutUs";
+import Checkout from "./pages/checkout/Checkout"; 
 import { ThemeProvider } from "./hooks/ThemeContext";
-import { AuthProvider, useAuth } from "./context/AuthContext";
+import { AuthProvider, useAuth } from "./context/AuthContext.jsx";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminApp from "./admin/AdminApp";
 import AdminRoute from "./admin/AdminRoute";
 
 const AppContent = () => {
   const { isLoggedIn } = useAuth();
-  const location = useLocation();
-  const isAdminPath = location.pathname.startsWith("/admin");
+ 
 
   return (
     <div className="bg-white dark:bg-gray-700 min-h-screen transition-colors duration-300">
-      {!isAdminPath && <Header key={isLoggedIn ? "logged-in" : "logged-out"} />}
+      <Header key={isLoggedIn ? "logged-in" : "logged-out"} />
+
+
       <Routes>
+
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<SignUp />} />
@@ -32,7 +35,7 @@ const AppContent = () => {
         <Route path="/place-details/:id" element={<PlaceDetails />} />
 
         <Route
-          path="/user/1"
+          path="/profile"
           element={
             <ProtectedRoute>
               <UserProfile />
@@ -42,6 +45,8 @@ const AppContent = () => {
 
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/checkout" element={<Checkout />} />
+
         <Route
           path="/admin/*"
           element={
@@ -50,9 +55,11 @@ const AppContent = () => {
             </AdminRoute>
           }
         />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
-      {!isAdminPath && <Footer />}
+
+      <Footer />
     </div>
   );
 };
@@ -68,3 +75,5 @@ const App = () => {
 };
 
 export default App;
+
+

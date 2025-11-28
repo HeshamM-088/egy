@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext.jsx";
+import { jwtDecode } from "jwt-decode";
 import {
   Card,
   CardHeader,
@@ -20,33 +21,46 @@ const Login = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const handleLogin = () => {
-    if (!email || !password) {
-      setError("Please fill in all fields!");
-      setSuccess("");
+  const handleLogin = async () => {
+        const link=import.meta.env.VITE_API_URL;
+  setError("");
+  setSuccess("");
+
+  if (!email || !password) {
+    setError("Please fill in all fields!");
+    return;
+  }
+
+  try {
+    const res = await fetch(`${link}auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setError(data.message || "Login failed");
       return;
     }
-    if (!email.includes("@") || !email.includes(".")) {
-      setError("Invalid email address!");
-      setSuccess("");
-      return;
-    }
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters!");
-      setSuccess("");
-      return;
-    }
-    setError("");
-    // Check admin 
-    if (email === "admin@egyguide.com" && password === "admin123") {
-      setSuccess("Welcome, Admin!");
-      login({ name: "Admin", email, role: "admin" });
-      return;
-    }
-    //  user
+
+    const decoded = jwtDecode(data.data.token);
+
+    login({
+      name: decoded.name,
+      email: decoded.email,
+      role: decoded.role,
+      token: data.data.token,
+    });
+
     setSuccess("Login successful!");
-    login({ name: "User", email, role: "user" });
-  };
+
+  } catch (err) {
+    console.log(err);
+    setError("Something went wrong");
+  }
+};
   return (
     <div className="relative min-h-screen flex items-center justify-center bg-[#f1f0eb] dark:bg-gray-900 overflow-hidden transition-colors duration-300 mb-1">
       {" "}
