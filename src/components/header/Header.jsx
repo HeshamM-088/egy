@@ -9,11 +9,11 @@ import {
   EnvelopeIcon,
 } from "@heroicons/react/24/outline";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 export default function Header() {
   const [openNav, setOpenNav] = React.useState(false);
-  const { isLoggedIn, logout } = useAuth();
+  const { isLoggedIn, logout,currentUser, } = useAuth();
 
   React.useEffect(() => {
     const handleResize = () => {
@@ -84,17 +84,33 @@ export default function Header() {
       <li>
         {isLoggedIn ? (
           <div className="flex items-center gap-x-2">
-            <NavLink
-              to="/user/1"
-              className={({ isActive }) =>
-                isActive
-                  ? "bg-teal-500 px-4 py-2 rounded-lg flex items-center gap-x-2 text-white"
-                  : "flex items-center gap-x-2 text-gray-700 hover:text-teal-500 transition-colors"
-              }
-            >
-              <UserIcon className="w-4 h-4" />
-              <span className="font-medium">Profile</span>
-            </NavLink>
+             {currentUser?.role !== "admin" && (
+  <NavLink
+    to="/profile"
+    className={({ isActive }) =>
+      isActive
+        ? "bg-teal-500 px-4 py-2 rounded-lg flex items-center gap-x-2 text-white"
+        : "flex items-center gap-x-2 text-gray-700 hover:text-teal-400 transition-colors"
+    }
+  >
+    <UserIcon className="w-5 h-5" />
+    <span className="font-medium">
+      {currentUser?.name || "Profile"}
+    </span>
+  </NavLink>
+)}
+            {currentUser?.role === "admin" && (
+              <NavLink
+                to="/admin"
+                className={({ isActive }) =>
+                  isActive
+                    ? "bg-purple-600 px-4 py-2 rounded-lg flex items-center gap-x-2 text-white"
+                    : "flex items-center gap-x-2 text-gray-700 hover:text-purple-600 transition-colors"
+                }
+              >
+                <span className="font-medium">Dashboard</span>
+              </NavLink>
+            )}
             <button
               onClick={logout}
               className="ml-2 bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition-colors"

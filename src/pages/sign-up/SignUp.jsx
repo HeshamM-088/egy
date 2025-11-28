@@ -24,31 +24,50 @@ const SignUp = () => {
   const [success, setSuccess] = useState("")
 
   const navigate = useNavigate();
-  const handleSignUp=()=>{
-    if (!userData.name || !userData.email || !userData.password || !userData.confirmPassword ) {
-      setError("All fields are required!");
-    }else if (userData.name[0] !== userData.name[0].toUpperCase()) {
-      setError("The first letter of the name must be capital!");
-    }else if (
-      !userData.email.includes("@") || !userData.email.includes(".")
-    ){
-      setError("Invalid email address!");
-    }else if (userData.password.length < 6 || !userData.password.includes("!") )
-    {
-      setError("Password must be at least 6 characters and includes '!'  ");
-    } else if (userData.password !== userData.confirmPassword)
-    {  setError("Passwords do not match!");
-    } else if (!userData.agree) {
-      setError("You must agree to the Terms and Conditions!");
-    } else {
-      setError ("")
-      setSuccess("Account created successfully! Redirecting to login...");
-      setTimeout(() => {
-      setSuccess("");
-      navigate("/login");
-    }, 2000)
+  const handleSignUp = async () => {
+    const link=import.meta.env.VITE_API_URL;
+  if (!userData.name || !userData.email || !userData.password || !userData.confirmPassword) {
+    setError("All fields are required!");
+  } else if (userData.name[0] !== userData.name[0].toUpperCase()) {
+    setError("The first letter of the name must be capital!");
+  } else if (!userData.email.includes("@") || !userData.email.includes(".")) {
+    setError("Invalid email address!");
+  } else if (userData.password.length < 6 || !userData.password.includes("!")) {
+    setError("Password must be at least 6 characters and include '!'");
+  } else if (userData.password !== userData.confirmPassword) {
+    setError("Passwords do not match!");
+  } else if (!userData.agree) {
+    setError("You must agree to the Terms and Conditions!");
+  } else {
+    setError("");
+    setSuccess("Registering account...");
+
+    try {
+      const res = await fetch(`${link}auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: userData.name,
+          email: userData.email,
+          password: userData.password,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setSuccess("Account created successfully! Redirecting to login...");
+        setTimeout(() => navigate("/login"), 2000);
+      } else {
+        setError(data.message || "Registration failed!");
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Server error. Please try again later.");
     }
-  };
+  }
+};
+
   return (
     <div className="relative min-h-screen flex items-center justify-center bg-[#f1f0eb] dark:bg-gray-900 overflow-hidden transition-colors duration-300">
       <div className="absolute inset-0 bg-[url('/rename.jpg')] bg-cover bg-center opacity-60 h-full"></div>

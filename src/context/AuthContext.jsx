@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, useContext } from "react";
+import { createContext, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
@@ -18,20 +18,6 @@ export const AuthProvider = ({ children }) => {
   const isLoggedIn = !!currentUser;
   const isAdmin = !!currentUser && currentUser.role === "admin";
 
-  useEffect(() => {
-    const handleStorageChange = () => {
-      try {
-        const stored = localStorage.getItem("user");
-        setCurrentUser(stored ? JSON.parse(stored) : null);
-      } catch (e) {
-        setCurrentUser(null);
-      }
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-    return () => window.removeEventListener("storage", handleStorageChange);
-  }, []);
-
   const login = (user) => {
     const toStore = {
       name: user?.name || "User",
@@ -44,7 +30,7 @@ export const AuthProvider = ({ children }) => {
     if (toStore.role === "admin") {
       navigate("/admin");
     } else {
-      navigate("/user/1");
+      navigate("/profile");
     }
   };
 
