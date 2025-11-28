@@ -1,30 +1,56 @@
+import React, { useEffect, useState } from "react";
+
+const API_USERS = `https://egi-topaz.vercel.app/api/v1/users`;
+const API_EVENTS = `https://egi-topaz.vercel.app/api/v1/events`;
+
 const Dashboard = () => {
+  const [usersCount, setUsersCount] = useState(0);
+  const [eventsCount, setEventsCount] = useState(0);
+  const [error, setError] = useState("");
+
+  const fetchDashboardStats = async () => {
+    try {
+      const [usersRes, eventsRes] = await Promise.all([
+        fetch(API_USERS),
+        fetch(API_EVENTS)
+      ]);
+
+      const usersJson = await usersRes.json();
+      const eventsJson = await eventsRes.json();
+
+      if (!usersRes.ok || !eventsRes.ok) {
+        throw new Error("Failed to fetch dashboard data");
+      }
+
+      setUsersCount(usersJson.data?.length || 0);
+      setEventsCount(eventsJson.data?.length || 0);
+
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchDashboardStats();
+  }, []);
+
   return (
     <div>
-      <h1 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
-        Dashboard
-      </h1>
-      <p className="mt-2 text-gray-600 dark:text-gray-300">
-        Overview of the site activity.
-      </p>
-      <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card title="Users" value="128" />
-        <Card title="Events" value="9" />
-        <Card title="Visits" value="12.4k" />
+      <h1 className="text-2xl font-bold">Dashboard</h1>
+      {error && <p className="text-red-400">{error}</p>}
+      <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4">
+        <Card title="Users" value={usersCount} />
+        <Card title="Events" value={eventsCount} />
       </div>
     </div>
   );
 };
 
-const Card = ({ title, value }) => {
-  return (
-    <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4">
-      <div className="text-sm text-gray-500 dark:text-gray-400">{title}</div>
-      <div className="text-3xl font-bold text-teal-700 dark:text-teal-400">
-        {value}
-      </div>
-    </div>
-  );
-};
+const Card = ({ title, value }) => (
+  <div className="p-4 border rounded-xl shadow-md">
+    <p className="text-sm opacity-70">{title}</p>
+    <h2 className="text-3xl font-bold text-teal-500">{value}</h2>
+  </div>
+);
 
 export default Dashboard;
